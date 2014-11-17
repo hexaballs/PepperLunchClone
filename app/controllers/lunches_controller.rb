@@ -2,6 +2,17 @@ class LunchesController < ApplicationController
   before_action :set_lunch, only: [:show, :edit, :update, :destroy]
 
   def submit
+    Lunch.destroy_all
+    start_date = Date.new(2014,9,22)
+    (0..12).each do |w|
+      (0..4).each do |d|
+        date = start_date + w.weeks + d.days
+        lunch_taken = params[:data][w][d]
+        if lunch_taken == 1
+          Lunch.create lunch_date: date
+        end
+      end
+    end
   end
 
   def data
